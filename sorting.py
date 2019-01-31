@@ -15,7 +15,9 @@ def insertion_sort(arr,debug=False):
                 if a > b:
                     comparisonCounter += 1
                     arr[backtrackPos] = a
-                    arr[backtrackPos] = b
+                    arr[backtrackPos-1] = b
+                    if debug:
+                        print(arr)
                 else:
                     comparisonCounter += 1
         else:
@@ -35,6 +37,8 @@ def bubble_sort(arr,debug=False):
                 comparisonCounter += 1
                 arr[i] = b
                 arr[i+1] = a
+                if debug:
+                    print(arr)
             else:
                 comparisonCounter += 1
                 whole_row_counter += 1
@@ -46,13 +50,13 @@ def bubble_sort(arr,debug=False):
     
 def selection_sort(arr,debug=False):
     comparisonCounter = 0
-    for originPos in range(0,len(arr)-1):
+    for originPos in range(0,len(arr)):
         searcher = 0
         a = arr[originPos]
         smallest = a
         for searchingPos in range((originPos + 1), len(arr)):
             b = arr[searchingPos]
-            if b < a:
+            if b < smallest:
                 smallest = b
                 searcher = searchingPos
             comparisonCounter += 1
@@ -67,7 +71,7 @@ if __name__ == "__main__":
     listBoi = [17,8,12,2,9,6,5]
     print(bubble_sort(listBoi))
     print(listBoi)
-    listBoi = [17,8,12,2,9,6,5]
+    listBoi = [17,8,12,2,9]
     print(insertion_sort(listBoi))
     print(listBoi)
     listBoi = [17,8,12,2,9,6,5]
