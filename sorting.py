@@ -1,4 +1,23 @@
+# Worst Case Test Runs (in Comparisons), Given A Randomized List of n Integers From 1-1000 (15 Trial Runs Each)
+#
+#
+#
+#          n    Bubble            Insertion        Selection
+#       ------------------------------------------------------
+#       |10^1 |     81     |         33         |      45     |
+#       |     |            |                    |             |
+#       |10^2 |    9900    |        2746        |     4950    |
+#       |     |            |                    |             |
+#       |10^3 |   984015   |       259089       |    499500   |
+#       |     |            |                    |             |
+#       |     |            |                    |             |
+#       |-----------------------------------------------------|
 
+
+
+
+
+from random import randint
 
 def insertion_sort(arr,debug=False):
     comparisonCounter = 0
@@ -9,6 +28,8 @@ def insertion_sort(arr,debug=False):
             comparisonCounter += 1
             arr[sortedPos-1] = b
             arr[sortedPos] = a
+            if debug:
+                print(arr)
             for backtrackPos in range(sortedPos-1,0,-1):
                 a = arr[backtrackPos-1]
                 b = arr[backtrackPos]
@@ -20,6 +41,7 @@ def insertion_sort(arr,debug=False):
                         print(arr)
                 else:
                     comparisonCounter += 1
+                    break
         else:
             comparisonCounter += 1
     return comparisonCounter
@@ -63,18 +85,41 @@ def selection_sort(arr,debug=False):
         if smallest != a:
             arr[originPos] = smallest
             arr[searcher] = a
+            if debug:
+                print(arr)
     return comparisonCounter
+
+def test_sorts(n,num_lists):
+    bubbleSum = 0
+    bubbleAvg = 0
+    insertionSum = 0
+    insertionAvg = 0
+    selectionSum = 0
+    selectionAvg = 0
+    listBoi = []
+    for i in range(n):
+        listBoi.append(randint(1,1000))
+    bubbleCopy = listBoi[:]
+    insertionCopy = listBoi[:]
+    selectionCopy = listBoi[:]
+    for i in range(num_lists):
+        bubbleSum += bubble_sort(bubbleCopy)
+        bubbleCopy = listBoi[:]
+    bubbleAvg = bubbleSum // n
+    for i in range(num_lists):
+        insertionSum += insertion_sort(insertionCopy)
+        insertionCopy = listBoi[:]
+    insertionAvg = insertionSum // n
+    for i in range(num_lists):
+        selectionSum += selection_sort(selectionCopy)
+        selectionCopy = listBoi[:]
+    selectionAvg = selectionSum // n
+    return ("Bubble Sort: " + str(bubbleAvg) + "\n" +  "Insertion Sort: " +  str(insertionAvg) + "\n" +  "Selection Sort: " +  str(selectionAvg))
+    
+    
             
             
 
 if __name__ == "__main__":
-    listBoi = [17,8,12,2,9,6,5]
-    print(bubble_sort(listBoi))
-    print(listBoi)
-    listBoi = [17,8,12,2,9]
-    print(insertion_sort(listBoi))
-    print(listBoi)
-    listBoi = [17,8,12,2,9,6,5]
-    print(selection_sort(listBoi))
-    print(listBoi)
+    print(test_sorts(1000,5))
     
